@@ -30,20 +30,20 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-sky-100 to-blue-100 flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full max-w-md"
+        className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md border border-sky-300"
       >
-        <h2 className="text-3xl font-bold text-white text-center mb-6">
-          Register
+        <h2 className="text-3xl font-bold text-slate-800 text-center mb-6">
+          สมัครสมาชิก
         </h2>
 
         {/* Email */}
         <input
           type="email"
-          placeholder="Email"
-          className="input input-bordered bg-white/20 text-white placeholder-white/70 mt-4 w-full"
+          placeholder="อีเมล"
+          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-4 w-full"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
@@ -52,8 +52,8 @@ export default function Register() {
         {/* Password */}
         <input
           type="password"
-          placeholder="Password"
-          className="input input-bordered bg-white/20 text-white placeholder-white/70 mt-2 w-full"
+          placeholder="รหัสผ่าน"
+          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-2 w-full"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
@@ -62,8 +62,8 @@ export default function Register() {
         {/* Confirm Password */}
         <input
           type="password"
-          placeholder="Confirm Password"
-          className="input input-bordered bg-white/20 text-white placeholder-white/70 mt-2 w-full"
+          placeholder="ยืนยันรหัสผ่าน"
+          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-2 w-full"
           value={form.confirmPassword}
           onChange={(e) =>
             setForm({ ...form, confirmPassword: e.target.value })
@@ -80,16 +80,16 @@ export default function Register() {
 
         {/* Button */}
         <button
-          className="btn btn-primary bg-white text-purple-600 hover:bg-gray-100 mt-4 w-full"
+          className="btn btn-primary bg-sky-600 text-white hover:bg-sky-500 mt-4 w-full"
           disabled={loading}
         >
-          {loading ? "Registering..." : "Register"}
+          {loading ? "กำลังลงทะเบียน..." : "ลงทะเบียน"}
         </button>
 
-        <p className="mt-4 text-center text-white/70">
-          Already have an account?{" "}
-          <a href="/login" className="text-white hover:underline">
-            Login
+        <p className="mt-4 text-center text-slate-500">
+          มีบัญชีแล้ว?{" "}
+          <a href="/login" className="text-sky-600 hover:underline">
+            เข้าสู่ระบบ
           </a>
         </p>
       </form>

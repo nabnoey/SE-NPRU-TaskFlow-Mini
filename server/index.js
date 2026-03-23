@@ -7,7 +7,14 @@ const app = express();
 
 connectDB();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: CLIENT_URL,
+    credentials: true, // อนุญาตให้ส่ง Header Authorization
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"], // ต้องมี Authorization
+  }),
+);
 app.use(express.json());
 
 app.use("/api/v1/auth", require("./src/router/authRoutes"));

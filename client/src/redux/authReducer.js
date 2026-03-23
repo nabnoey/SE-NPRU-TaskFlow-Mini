@@ -36,11 +36,14 @@ export const fetchMe = createAsyncThunk("auth/me", async (_, thunkAPI) => {
   return res.data;
 });
 
+const initialAuthUser = JSON.parse(localStorage.getItem("authUser")) || null;
+const initialToken = localStorage.getItem("token") || null;
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    authUser: null,
-    token: null,
+    authUser: initialAuthUser,
+    token: initialToken,
     loading: false,
     error: null,
   },
@@ -48,6 +51,8 @@ const authSlice = createSlice({
     logout: (state) => {
       state.authUser = null;
       state.token = null;
+      localStorage.removeItem("authUser");
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
@@ -59,6 +64,8 @@ const authSlice = createSlice({
         s.loading = false;
         s.token = a.payload.token;
         s.authUser = a.payload.user;
+        localStorage.setItem("token", a.payload.token);
+        localStorage.setItem("authUser", JSON.stringify(a.payload.user));
       })
       .addCase(login.rejected, (s, a) => {
         s.loading = false;
@@ -66,6 +73,7 @@ const authSlice = createSlice({
       })
       .addCase(fetchMe.fulfilled, (s, a) => {
         s.authUser = a.payload;
+        localStorage.setItem("authUser", JSON.stringify(a.payload));
       })
 
       .addCase(register.pending, (s) => {

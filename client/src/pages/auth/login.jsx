@@ -23,20 +23,20 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-sky-200 to-cyan-100 flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 w-full max-w-md"
+        className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md border border-sky-300"
       >
-        <h2 className="text-3xl font-bold text-white text-center mb-6">
-          Login
+        <h2 className="text-3xl font-bold text-slate-800 text-center mb-6">
+          เข้าสู่ระบบ
         </h2>
 
         {/* Email */}
         <input
           type="email"
-          placeholder="Email"
-          className="input input-bordered bg-white/20 text-white placeholder-white/70 mt-4 w-full"
+          placeholder="อีเมล"
+          className="input input-bordered w-full mt-4 bg-white text-black placeholder-gray-500"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
@@ -45,8 +45,8 @@ export default function Login() {
         {/* Password */}
         <input
           type="password"
-          placeholder="Password"
-          className="input input-bordered bg-white/20 text-white placeholder-white/70 mt-2 w-full"
+          placeholder="รหัสผ่าน"
+          className="input input-bordered w-full mt-2 bg-white text-black placeholder-gray-500"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
@@ -61,16 +61,16 @@ export default function Login() {
 
         {/* Button */}
         <button
-          className="btn btn-primary bg-white text-blue-600 hover:bg-gray-100 mt-4 w-full"
+          className="btn btn-primary bg-sky-600 text-white hover:bg-sky-500 mt-4 w-full"
           disabled={loading}
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
         </button>
 
-        <p className="mt-4 text-center text-white/70">
-          Don't have an account?{" "}
-          <a href="/register" className="text-white hover:underline">
-            Register
+        <p className="mt-4 text-center text-slate-500">
+          ยังไม่มีบัญชี?{" "}
+          <a href="/register" className="text-sky-600 hover:underline">
+            สร้างบัญชี
           </a>
         </p>
       </form>
