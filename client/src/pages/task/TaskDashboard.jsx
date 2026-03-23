@@ -21,9 +21,13 @@ export default function TaskDashboard() {
     }
   }, [authUser, dispatch]);
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault();
-    dispatch(createTask(newTask));
+
+    await dispatch(createTask(newTask));
+
+    dispatch(fetchTasks()); // 👈 เพิ่มอันนี้
+
     setNewTask({
       title: "",
       description: "",
@@ -31,7 +35,6 @@ export default function TaskDashboard() {
       priority: "low",
     });
   };
-
   const handleDelete = (id) => {
     if (window.confirm("Are you sure?")) {
       dispatch(deleteTask(id));
@@ -136,7 +139,7 @@ export default function TaskDashboard() {
             return (
               <div
                 key={task._id}
-                className="border border-amber-300 bg-slate-800/75 rounded-xl p-4 shadow-lg"
+                className="border border-amber-300 bg-white rounded-xl p-4 shadow-lg"
               >
                 <div className="flex justify-between items-start">
                   <h3 className="text-xl font-semibold text-sky-800">

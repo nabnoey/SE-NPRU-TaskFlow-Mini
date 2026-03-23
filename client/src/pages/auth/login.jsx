@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../redux/authReducer";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../component/ToastContext";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
   const { loading, error } = useSelector((state) => state.auth);
 
   const [form, setForm] = useState({
@@ -17,7 +19,10 @@ export default function Login() {
     e.preventDefault();
     dispatch(login(form)).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
+        toast.notify("เข้าสู่ระบบสำเร็จ", "success");
         navigate("/dashboard");
+      } else {
+        toast.notify("เข้าสู่ระบบไม่สำเร็จ", "error");
       }
     });
   };

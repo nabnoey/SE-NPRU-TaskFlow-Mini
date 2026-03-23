@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { register } from "../../redux/authReducer";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "../../component/ToastContext";
 
 export default function Register() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
   const { loading, error } = useSelector((state) => state.auth);
 
   const [form, setForm] = useState({
@@ -13,17 +15,22 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+  const [validationError, setValidationError] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (form.password !== form.confirmPassword) {
-      alert("Passwords do not match");
+      setValidationError("รหัสผ่านและยืนยันรหัสผ่านไม่ตรงกัน");
       return;
     }
+    setValidationError("");
     dispatch(register({ email: form.email, password: form.password })).then(
       (result) => {
         if (result.meta.requestStatus === "fulfilled") {
+          toast.notify("ลงทะเบียนสำเร็จ", "success");
           navigate("/login");
+        } else {
+          toast.notify("ลงทะเบียนไม่สำเร็จ", "error");
         }
       },
     );
@@ -33,7 +40,7 @@ export default function Register() {
     <div className="min-h-screen bg-gradient-to-br from-cyan-100 via-sky-100 to-blue-100 flex items-center justify-center p-4">
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md border border-sky-300"
+        className="relative z-10 bg-white rounded-2xl shadow-xl p-8 w-full max-w-md border border-sky-300"
       >
         <h2 className="text-3xl font-bold text-slate-800 text-center mb-6">
           สมัครสมาชิก
@@ -43,7 +50,8 @@ export default function Register() {
         <input
           type="email"
           placeholder="อีเมล"
-          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-4 w-full"
+          autoComplete="email"
+          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-4 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
           value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
           required
@@ -53,7 +61,8 @@ export default function Register() {
         <input
           type="password"
           placeholder="รหัสผ่าน"
-          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-2 w-full"
+          autoComplete="new-password"
+          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
           value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
           required
@@ -63,7 +72,8 @@ export default function Register() {
         <input
           type="password"
           placeholder="ยืนยันรหัสผ่าน"
-          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-2 w-full"
+          autoComplete="new-password"
+          className="input input-bordered bg-slate-50 text-slate-900 placeholder-slate-400 mt-2 w-full focus:outline-none focus:ring-2 focus:ring-sky-500"
           value={form.confirmPassword}
           onChange={(e) =>
             setForm({ ...form, confirmPassword: e.target.value })
@@ -72,9 +82,9 @@ export default function Register() {
         />
 
         {/* Error */}
-        {error && (
-          <p className="text-red-400 mt-2 text-center">
-            {error.message || "Register failed"}
+        {(validationError || error) && (
+          <p className="text-red-500 mt-2 text-center">
+            {validationError || error.message || "เกิดข้อผิดพลาด"}
           </p>
         )}
 

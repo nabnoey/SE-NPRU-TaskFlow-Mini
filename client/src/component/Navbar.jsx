@@ -30,10 +30,10 @@ function Navbar() {
           ) : (
             <ul className="menu menu-horizontal px-1">
               <li>
-                <Link to="/register">Register</Link>
+                <Link to="/">Register</Link>
               </li>
               <li>
-                <Link to="/">Login</Link>
+                <Link to="/login">Login</Link>
               </li>
             </ul>
           )}

@@ -65,6 +65,7 @@ const taskSlice = createSlice({
     builder
       .addCase(fetchTasks.pending, (s) => {
         s.loading = true;
+        s.error = null;
       })
       .addCase(fetchTasks.fulfilled, (s, a) => {
         s.loading = false;
@@ -74,15 +75,42 @@ const taskSlice = createSlice({
         s.loading = false;
         s.error = a.payload;
       })
+      .addCase(createTask.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
       .addCase(createTask.fulfilled, (s, a) => {
+        s.loading = false;
         s.tasks.push(a.payload);
       })
+      .addCase(createTask.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload;
+      })
+      .addCase(updateTask.pending, (s) => {
+        s.loading = true;
+        s.error = null;
+      })
       .addCase(updateTask.fulfilled, (s, a) => {
+        s.loading = false;
         const index = s.tasks.findIndex((t) => t._id === a.payload._id);
-        s.tasks[index] = a.payload;
+        if (index !== -1) s.tasks[index] = a.payload;
+      })
+      .addCase(updateTask.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload;
+      })
+      .addCase(deleteTask.pending, (s) => {
+        s.loading = true;
+        s.error = null;
       })
       .addCase(deleteTask.fulfilled, (s, a) => {
+        s.loading = false;
         s.tasks = s.tasks.filter((t) => t._id !== a.payload);
+      })
+      .addCase(deleteTask.rejected, (s, a) => {
+        s.loading = false;
+        s.error = a.payload;
       });
   },
 });
